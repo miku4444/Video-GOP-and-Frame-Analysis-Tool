@@ -25,6 +25,8 @@ This option takes a lot longer as every frame must be decoded to be analysed, co
 This tool will implement `ffprobe` commands, filter the results and perform necessary calculations. 
 
 ## How to use?
+Head over to [releases](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/releases/tag/v0.1.0).
+
 **Option 1:**
 - Download and run the standalone executables `(win/linux)` which are bundled with all required dependencies `(python, ffprobe)` and can be run straight out of the box.
 - The tool will always use system installed ffprobe when possible, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
