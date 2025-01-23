@@ -1,5 +1,8 @@
-## Demo screenshot
-![Demo Screenshot](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot.png)
+## Demo screenshots
+
+|Option 1 Example|Option 2 Example|
+|--------|--------|
+|![Demo Screenshot Option 1](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot%20option%201.png)|![Demo Screenshot Option 2](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot%20option%202.png)|
 
 ## What does this tool do?
 
@@ -15,7 +18,7 @@ Wouldn't all keyframe intervals be the same? Not always. Videos can have variabl
 **Option 2** will display:
 - keyframe timestamps
 - each keyframe interval
-- the count of B-frames, P-frames, I-frames and their respective sizes and proportion.
+- the count of all B-frames, P-frames, I-frames and their respective sizes and proportion.
   
 This option takes a lot longer as every frame must be decoded to be analysed, compared to just parsing the metadata from every packet in option 1. Speed depends on the strength of your cpu, the complexity to decode the video, and video length.
 
