@@ -23,9 +23,15 @@ Wouldn't all keyframe intervals be the same? Not always. Videos can have variabl
 This option takes a lot longer as every frame must be decoded to be analysed, compared to just parsing the metadata from every packet in option 1. Speed depends on the strength of your cpu, the complexity to decode the video, and video length.
 
 This tool will implement `ffprobe` commands, filter the results and perform necessary calculations. 
-The standalone executables `(win/linux)` are bundled with all required dependencies `(python, ffprobe)` and you can be run straight out of the box. The tool will always use system installed ffprobe when possible, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
 
-The python file contains only the script and requires you to have `ffprobe` and `python3` already installed and on your system PATH. If your distribution did not come with it, you also need `Tkinter` to access file system via gui.
+## How to use?
+**Option 1:**
+- Download and run the standalone executables `(win/linux)` which are bundled with all required dependencies `(python, ffprobe)` and can be run straight out of the box.
+- The tool will always use system installed ffprobe when possible, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
+
+**Option 2:**
+- Download and run the python file which contains only the script and requires you to have `ffprobe` and `python3` already installed and on your system PATH.
+- If your distribution did not come with it, you also need `Tkinter` to access file system via gui.
 
 `sudo apt install python3-tk`  # For Debian/Ubuntu-based systems
 
