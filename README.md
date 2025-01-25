@@ -6,44 +6,53 @@
 
 ## What does this tool do?
 
-Partly based off the ffprobe commands provided here https://stackoverflow.com/a/18088156.
+Partly based off the ffprobe commands provided here https://stackoverflow.com/a/18088156. This tool was built to calculate the keyframe intervals of a given video and display it in seconds.
+
+Wouldn't each keyframe intervals be the same length? Not always. Videos may have variable keyframe intervals. This is an option enabled by default in OBS for example (when keyframe interval is set to 0s).
+
 This program has two options:
 
 **Option 1** will display: 
+- basic metadata
 - keyframe timestamps
-- each keyframe interval
+- each keyframe interval (seconds)
 
-Wouldn't all keyframe intervals be the same? Not always. Videos can have variable keyframe intervals. This is an option enabled by default in OBS for example (when keyframe interval is set to 0s).
+This is the fastest option as it only parses the metadata from every packet. 
 
 **Option 2** will display:
+- basic metadata
 - keyframe timestamps
-- each keyframe interval
+- each keyframe interval (seconds)
 - the count of all B-frames, P-frames, I-frames and their respective sizes and proportion.
   
-This option takes a lot longer as every frame must be decoded to be analysed, compared to just parsing the metadata from every packet in option 1. Speed depends on the strength of your cpu, the complexity to decode the video, and video length.
+This option takes much longer compared to option 1 as every frame is decoded for the per-frame metadata to be read and analysed. Speed depends on disk i/o speed, complexity of decoding, video format, and video length. For example MP4 allows quicker metadata extraction from the file header compared to MKV which requires more extensive scanning.
 
-This tool will implement `ffprobe` commands, filter the results and perform necessary calculations. 
+If you want more extensive metadata there are already tools for that like [mediainfo](https://github.com/MediaArea/MediaInfo), a basic ffprobe prompt, or your local video player like mpv or vlc.
+
+This tool will implement `ffprobe` commands, parse and filter the results, and perform necessary calculations. 
 
 ## How to use?
-Head over to [releases](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/releases/tag/v0.1.0).
-
 **Option 1:**
 - Download and run the standalone executables `(win/linux)` which are bundled with all required dependencies `(python, ffprobe)` and can be run straight out of the box.
-- The tool will always use system installed ffprobe when possible, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
+- The tool will always use existing ffprobe installations when available, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
 
 **Option 2:**
 - Download and run the python file which contains only the script and requires you to have `ffprobe` and `python3` already installed and on your system PATH.
 - If your distribution did not come with it, you also need `Tkinter` to access file system via gui.
 
-`sudo apt install python3-tk`  # For Debian/Ubuntu-based systems
+For Debian/Ubuntu-based systems:
 
-Supports Windows and Linux. Tested on Windows 11 and WSL 2/Ubuntu.
+`python3 -m tkinter` to test
+
+`sudo apt install python3-tk` to install
+
+Supports Windows and Linux. Tested on Windows 11 x64 and WSL 2/Ubuntu.
 
 ## What does PTS offset do?
 
 "Many file formats do not require timestamps to start at 0. In fact it can be important to have them start at other values if several files each make up part of a longer stream and you want to be able to non-destructively put them back together." - https://stackoverflow.com/a/10573528
 
-This means that not every video will have the first frame starting at 0.0 seconds.  Enabling PTS (Presentation Time Stamp) offset means all Frame Presentation Time Stamps will be shifted back by an offset of the very first frame so that the analysis starts at the "correct" timing of 0.0 seconds as true to a video player.
+This means the metadata of the first frame might not show it starting at 0.0 seconds - despite them playing from the "start" in a video player.  Enabling PTS (Presentation Time Stamp) offset means all Frame Presentation Time Stamps will be shifted back by an offset of the very first frame so that the analysis starts at the "correct" timing of 0.0 seconds as true to a video player.
 
 Enabled or disabled won't affect the keyframe interval calculations, **these will always be correct**. An offset will apply to every frame and thus every calculation, so the final result will not be affected. It will however, affect the keyframe positions/timestamps shown. 
 
