@@ -64,7 +64,7 @@ Operating systems like Windows and Linux use the binary system and display the s
 
 A Kilobyte (KB) is different from a Kibibyte (KiB).
 - **1 KB (Kilobyte)** = **1000 bytes** as you would expect. However **1 KiB (Kibibyte) = 1024 bytes**.
-- **1 MB (Megabyte)** = **1,000,000 bytes**. **1 "MB"** in Windows (actually an MiB) is **1,048,576 bytes**.
+- **1 MB (Megabyte)** = **1,000,000 bytes**. **1 "MB"** in Windows (actually an MiB) is **1,048,576 bytes** (1,024 × 1,024 bytes).
 - **1 GB (Gigabyte)** = **1,000,000,000 bytes** in the decimal system. **1 GiB (Gibibyte) = 1,073,741,824 bytes** (1,024 × 1,024 × 1,024 bytes) in the binary system.
 
 Most of the internets' websites like file hosters such as Google Drive or Discord use the decimal system. This is the system most people are used to.
