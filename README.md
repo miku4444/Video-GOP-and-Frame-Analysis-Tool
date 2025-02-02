@@ -70,3 +70,28 @@ A Kilobyte (KB) is different from a Kibibyte (KiB).
 Most of the internets' websites like file hosters such as Google Drive or Discord use the decimal system. This is the system most people are used to.
 
 This mismatch between decimal and binary risks misinterpretation for any non-byte units and so only bytes are used as the same term could mean different values to people.
+
+## To Do
+Priority
+- use shlex.quote() on user-provided paths for subprocess sanitisation
+- use pathlib.Path() for better path normalization
+- switch ANSI escapes to curses library just in case of really old terminals 
+
+Secondary
+- add unit tests with mocked ffprobe
+- docstrings, function docs, typehinting
+- update example pictures
+- transition to ijson ffprobe streamable output
+    - can add progress bar for option 2 (can use rich progress bar)
+    - change to progressive output and results
+    - edit readme to add features column and include O(N) -> O(1) low memory overhead improvement over traditional ffprobe commands
+- toggle to switch between bytes and larger units at the end, would probably need to replace terminal output, can also use rich
+- use [rich](https://github.com/Textualize/rich) for nicer terminal output formatting
+- pivot to object oriented code from current procedual code 
+
+Ideas
+- research into whether it's possible to implement application level multithreading by segmenting large videos and running ffprobe on each segment. would have to investigate temporary files after segmentation, or in-memory segmentation. Test if ffprobe can reliably analyze streamed input segments. https://stackoverflow.com/a/53267887
+- could allow multiple files to be analysed at the same time
+- gui?
+
+
