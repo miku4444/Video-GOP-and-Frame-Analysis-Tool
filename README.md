@@ -6,7 +6,7 @@
 
 ## What does this tool do?
 
-Partly based off the ffprobe commands provided here https://stackoverflow.com/a/18088156. This tool was built to calculate the keyframe intervals of a given video and display it in seconds.
+The Video GOP (Group of Pictures) and Frame Analysis Tool, shortened to VGFAT was built to calculate the keyframe intervals of a given video and display it in seconds. Initially based off the ffprobe commands provided here https://stackoverflow.com/a/18088156/
 
 Wouldn't each keyframe intervals be the same length? Not always. Videos may have variable keyframe intervals. This is an option enabled by default in OBS for example (when keyframe interval is set to 0s).
 
