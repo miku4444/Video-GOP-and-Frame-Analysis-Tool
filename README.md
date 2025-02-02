@@ -6,7 +6,7 @@
 
 ## What does this tool do?
 
-The Video GOP (Group of Pictures) and Frame Analysis Tool, shortened to VGFAT was built to calculate the keyframe intervals of a given video and display it in seconds. Initially based off the ffprobe commands provided here https://stackoverflow.com/a/18088156/
+The Video GOP (Group of Pictures) and Frame Analysis Tool, shortened to VGFAT was built to calculate the keyframe intervals of a given video and display it in seconds. Initially based off the ffprobe commands provided here https://stackoverflow.com/a/18088156/.
 
 Wouldn't each keyframe intervals be the same length? Not always. Videos may have variable keyframe intervals. This is an option enabled by default in OBS for example (when keyframe interval is set to 0s).
 
@@ -79,13 +79,13 @@ Priority
 - switch ANSI escapes to curses library just in case of really old terminals 
 
 Secondary
-- add unit tests with mocked ffprobe
-- docstrings, function docs, typehinting
-- update example pictures
 - transition to ijson ffprobe streamable output
     - can add progress bar for option 2 (can use rich progress bar)
     - change to progressive output and results
     - edit readme to add features column and include O(N) -> O(1) low memory overhead improvement over traditional ffprobe commands
+- add unit tests with mocked ffprobe
+- docstrings, function docs, typehinting
+- update example pictures
 - toggle to switch between bytes and larger units at the end, would probably need to replace terminal output, can also use rich
 - use [rich](https://github.com/Textualize/rich) for nicer terminal output formatting
 - pivot to object oriented code from current procedual code 
