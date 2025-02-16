@@ -43,19 +43,19 @@ def is_video(filepath):
         ffprobe_path = get_ffprobe_path()
 
         cmd = [
-            ffprobe_path,  # The ffprobe executable
-            "-v", "error",  # Only show errors (suppresses other output)
-            "-select_streams", "v",  # Select only video streams
-            "-show_entries", "stream=codec_type",  # Show the type of each stream
-            "-of", "csv=p=0",  # Output format: CSV with no headers or wrappers
-            filepath  # The file to analyze
+            ffprobe_path,
+            "-v", "error",
+            "-select_streams", "v",
+            "-show_entries", "stream=codec_type",
+            "-of", "csv=p=0",
+            filepath
         ]
 
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
-            creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0  # Hide console on Windows
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
         )
 
         return result.returncode == 0 and "video" in result.stdout
@@ -281,13 +281,23 @@ def main():
     if analysis_type in ["2", "2p"]:
         frames_size, frames_count = process_all_frames(frame_data)
         total_frames_size = sum(frames_size.values())
+        total_frame_count = sum(frames_count.values())
 
         max_digits_frames = len(str(max(frames_count["I"], frames_count["P"], frames_count["B"])))
         max_digits_size = len(str(max(frames_size["I"], frames_size["P"], frames_size["B"])))
         
         print("\n[Frame Data]")
         for IPB in frames_count:
-            print(f"[{IPB}-Frames]   Count: {frames_count[IPB]}{(max_digits_frames - len(str(frames_count[IPB]))) * " "}   Total Size: {frames_size[IPB]} bytes {(max_digits_size - len(str(frames_size[IPB]))) * " "} ({(frames_size[IPB] / total_frames_size)*100:.2f}%)")
+            frame_proportion_percentage = f"{(frames_count[IPB] / total_frame_count) * 100:.2f}%"
+            print(f"[{IPB}-Frames]   "
+                  f"Count: {frames_count[IPB]}" #frame count
+                  f"{(max_digits_frames - len(str(frames_count[IPB])))*" "} "   #space
+                  f"({frame_proportion_percentage})"    #percentage
+                  f"{(6 - len(str(frame_proportion_percentage)))*" "}    "   #{padding} + 4 spaces
+                  f"Total Size: {frames_size[IPB]} bytes"   #total size
+                  f"{(max_digits_size - len(str(frames_size[IPB])))*" "} "  #{padding} + 1 space
+                  f"({(frames_size[IPB] / total_frames_size)*100:.2f}%)"    #percentage
+                  )
         
     print("\n[Keyframes Data]")
     if analysis_type in ["1", "1p"]:
@@ -307,7 +317,8 @@ def main():
     print("\n")
 
 while True:    
-    main()
-    input_from_user = input("\nEnter to run again or type 'exit'... ")  # Forces the terminal to wait
+    if __name__ == "__main__": 
+        main()
+    input_from_user = input("\nEnter to run again or type 'exit'... ")
     if input_from_user == "exit":
         break
