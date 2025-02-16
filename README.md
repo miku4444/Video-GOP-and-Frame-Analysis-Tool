@@ -32,7 +32,6 @@ If you want more extensive metadata there are already tools for that like [media
 This tool will implement `ffprobe` commands, parse and filter the results, and perform necessary calculations. 
 
 ## How to use?
-### [Releases are out of date, they haven't been updated yet]
 **Option 1:**
 - Download and run the standalone executables `(win/linux)` which are bundled with all required dependencies `(python, ffprobe)` and can be run straight out of the box.
 - The tool will always use existing ffprobe installations when available, otherwise will fallback to the included `ffprobe` bundled at `v7.1`, current as of `24-01-25 (dd-mm-yy)`.
@@ -96,3 +95,6 @@ Ideas
 - gui?
 - settings page to adjust p based times, enable/disable size formatting, decimal places
 - could make bar graph of every frame against its size
+
+
+
