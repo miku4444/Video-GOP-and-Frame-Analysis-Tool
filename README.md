@@ -46,7 +46,7 @@ For Debian/Ubuntu-based systems:
 
 `sudo apt install python3-tk` to install
 
-Supports Windows and Linux. Tested on Windows 11 x64 and WSL 2/Ubuntu.
+Supports Windows and Linux. Tested on Windows 11 x64 and WSL 2/Ubuntu 24.04.
 
 ## What does PTS offset do?
 
@@ -94,6 +94,3 @@ Ideas
 - gui?
 - settings page to adjust p based times, enable/disable size formatting, decimal places
 - could make bar graph of every frame against its size
-
-
-
