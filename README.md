@@ -2,7 +2,7 @@
 
 |Option 1 Example|Option 2 Example|
 |--------|--------|
-|![Demo Screenshot Option 1](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot%20option%201.png)|![Demo Screenshot Option 2](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot%20option%202.png)|
+|![Demo Screenshot Option 1]()|![Demo Screenshot Option 2](https://github.com/miku4444/Video-GOP-and-Frame-Analysis-Tool/blob/main/demo%20screenshot%20option%202.png)|
 
 ## What does this tool do?
 
