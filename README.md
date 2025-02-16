@@ -6,7 +6,7 @@
 
 ## What does this tool do?
 
-The Video GOP (Group of Pictures) and Frame Analysis Tool, shortened to VGFAT was built to calculate the keyframe intervals of a given video and display it in seconds. Initially based off the ffprobe commands provided here https://stackoverflow.com/a/18088156/.
+The Video GOP (Group of Pictures) and Frame Analysis Tool, shortened to VGFAT was built to calculate the keyframe intervals of a given video and display it in seconds. Initially based off the ffprobe commands provided here https://stackoverflow.com/a/18088156/
 
 Wouldn't each keyframe intervals be the same length? Not always. Videos may have variable keyframe intervals. This is an option enabled by default in OBS for example (when keyframe interval is set to 0s).
 
@@ -61,7 +61,7 @@ Enabled or disabled won't affect the keyframe interval calculations, **these wil
 
 To ensure accuracy and avoid confusion, this tool displays frame sizes strictly in bytes. Eliminating ambiguity between decimal or binary units.
 
-Operating systems like Windows and Linux use the binary system and display the size of files in KB, MB, GB, etc. These are not true Kilobytes, Megabytes, and Gigabytes. Instead they are actually Kibibytes, Mebibytes, and Gibibytes. Their actual unit of measurement should be KiB, MiB, and GiB, but they omit the 'i' - leading to confusion between users. The reason they use the binary system is beacuse calculations are based on powers of 2.
+Operating systems like Windows and Linux use the binary system and display the size of files in KB, MB, GB, etc. These are not true Kilobytes, Megabytes, and Gigabytes. Instead they are actually Kibibytes, Mebibytes, and Gibibytes. Their actual unit of measurement should be KiB, MiB, and GiB, but they omit the 'i' - leading to confusion between users. The reason they use the binary system is because calculations are based on powers of 2.
 
 A Kilobyte (KB) is different from a Kibibyte (KiB).
 - **1 KB (Kilobyte)** = **1000 bytes** as you would expect. However **1 KiB (Kibibyte) = 1024 bytes**.
@@ -94,5 +94,5 @@ Ideas
 - research into whether it's possible to implement application level multithreading by segmenting large videos and running ffprobe on each segment. would have to investigate temporary files after segmentation, or in-memory segmentation. Test if ffprobe can reliably analyze streamed input segments. https://stackoverflow.com/a/53267887
 - could allow multiple files to be analysed at the same time
 - gui?
-
-
+- settings page to adjust p based times, enable/disable size formatting, decimal places
+- could make bar graph of every frame against its size
