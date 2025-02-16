@@ -84,7 +84,6 @@ Secondary
     - edit readme to add features column and include O(N) -> O(1) low memory overhead improvement over traditional ffprobe commands
 - add unit tests with mocked ffprobe
 - docstrings, function docs, typehinting
-- update example pictures
 - toggle to switch between bytes and larger units at the end, would probably need to replace terminal output, can also use rich
 - use [rich](https://github.com/Textualize/rich) for nicer terminal output formatting
 - pivot to object oriented code from current procedual code 
