@@ -71,26 +71,26 @@ Most of the internets' websites like file hosters such as Google Drive or Discor
 
 This mismatch between decimal and binary risks misinterpretation for any non-byte units and so only bytes are used as the same term could mean different values to people.
 
-## To Do
-Priority
-- use shlex.quote() on user-provided paths for subprocess sanitisation
-- use pathlib.Path() for better path normalization
-- switch ANSI escapes to curses library just in case of really old terminals 
-
-Secondary
-- transition to ijson ffprobe streamable output
-    - can add progress bar for option 2 (can use rich progress bar)
+## Upcoming
+- transitioning to ijson ffprobe streamable output
+    - use [rich](https://github.com/Textualize/rich) for nicer terminal output formatting
     - change to progressive output and results
-    - edit readme to add features column and include O(N) -> O(1) low memory overhead improvement over traditional ffprobe commands
+    - can add progress bar for option 2 (can use rich progress bar)
+    - edit readme to add features column and include script O(N) -> O(1) improvements. low memory overhead improvement over traditional ffprobe commands
+    - streaming/progressive output allows for almost instantaneous results - faster visible results than traditional commands and any other ffprobe implementations
+ 
+## To Do
 - add unit tests with mocked ffprobe
-- docstrings, function docs, typehinting
 - toggle to switch between bytes and larger units at the end, would probably need to replace terminal output, can also use rich
-- use [rich](https://github.com/Textualize/rich) for nicer terminal output formatting
 - pivot to object oriented code from current procedual code 
+- add time taken
+- allow mulltiprocessing - could allow multiple files to be analysed at the same time
 
 Ideas
 - research into whether it's possible to implement application level multithreading by segmenting large videos and running ffprobe on each segment. would have to investigate temporary files after segmentation, or in-memory segmentation. Test if ffprobe can reliably analyze streamed input segments. https://stackoverflow.com/a/53267887
-- could allow multiple files to be analysed at the same time
 - gui?
 - settings page to adjust p based times, enable/disable size formatting, decimal places
 - could make bar graph of every frame against its size
+
+
+
