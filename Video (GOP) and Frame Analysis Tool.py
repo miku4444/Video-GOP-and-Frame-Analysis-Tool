@@ -17,7 +17,19 @@ def type_out(text, speed=0.0175):
         time.sleep(speed)
     print()
 
-def get_ffprobe_path():
+def get_ffprobe_path() -> str:
+    """
+    Locates the path of the FFprobe executable.
+    
+    First searched for FFprobe on the system PATH.
+    Otherwise looks for it in bundled in the application path when frozen in an executable.
+
+    Raises:
+        FileNotFoundError: If FFprobe is not found.
+
+    Returns:
+        str: The absolute path to FFprobe.
+    """
     system_ffprobe = shutil.which("ffprobe")
     if system_ffprobe:
         return system_ffprobe
@@ -38,7 +50,21 @@ def get_ffprobe_path():
 
     return ffprobe_path
         
-def is_video(filepath):
+def is_video(filepath: str) -> bool:
+    """
+    Determines if the input file is a video file by running a minimal FFprobe command.
+
+    Executes FFprobe to quickly check if the provided file path
+    points to a file containing at least one video stream. It does this by 
+    selecting video streams and checking the output for the "video" codec type.
+
+    Args:
+        filepath (str): the absolute file path returned from get_ffprobe_path()
+
+    Returns:
+        bool: True if the file is determined to be a video file (contains a video stream).
+              False otherwise.
+    """
     try:
         ffprobe_path = get_ffprobe_path()
 
@@ -62,7 +88,15 @@ def is_video(filepath):
     except Exception:
         return False
 
-def user_input():
+def user_input() -> tuple[str, str]:
+    """
+    Continuously loops until a video is chosen or a valid video path is given.
+    Then continuously loops until a valid analysis mode is chosen.
+
+    Returns:
+        filepath (str): the absolute file path of the chosen video
+        analysis_type (str): the analysis mode chosen from 1, 2, 1p, 2p
+    """
     print("__________________________________")
     print("Video GOP and Frame Metadata Analysis Tool")
     error = False
@@ -88,7 +122,7 @@ def user_input():
                 error = True
                 continue
         else:
-            if sys.platform == "win32":
+            if sys.platform == "win32":     # If on windows then match resolution of Tkinter pop-up to monitor resolution
                 windll.shcore.SetProcessDpiAwareness(2)
             root = tk.Tk()
             root.withdraw()
@@ -105,7 +139,7 @@ def user_input():
                                             ),
                                             ("All files", "*.*")
                                             ])
-            if not filepath:  # User canceled dialog
+            if not filepath:  # If user canceled dialog
                 if error:
                     print("\033[F\033[K", end="")
                     error = False
@@ -138,7 +172,7 @@ def user_input():
 
     error = False
     while True:
-        analysis_type = input("Enter 1 for [key-frame interval analysis] (fast) or 2 for [full, frame-analysis] (slower): ")
+        analysis_type = input("Enter 1 for [key-frame analysis] (fast) or 2 for [key-frame + frame type analysis] (slower): ")
         if analysis_type in ['1', '2', '1p', '2p']:
             if error:
                 print("\033[F", end="")
@@ -161,7 +195,18 @@ def user_input():
 
     return filepath, analysis_type
 
-def return_frame_data(filepath, analysis_type):
+def return_frame_data(filepath: str, analysis_type: str) -> json:
+    """
+    Runs the appropriate ffprobe command based on analysis type. Captures the standard output 
+    from the completed external process and parses it as a JSON object.
+
+    Args:
+        filepath (str): the absolute file path of the chosen video
+        analysis_type (str): the analysis mode chosen from 1, 2, 1p, 2p
+
+    Returns:
+        json: Output of the ffprobe command in json structure.
+    """
     ffprobe_path = get_ffprobe_path()
 
     keyframe_command = [
@@ -198,14 +243,26 @@ def return_frame_data(filepath, analysis_type):
     return json.loads(result.stdout)
 
 def process_frame_data_to_keyframes(frame_data):
+    """
+    Parses and assigns json data to their respective variables.
+
+    Args:
+        frame_data (json): Output of the ffprobe command in json structure.
+
+    Returns:
+        - keyframe_packets (List(Dict[str:Any])): A list where each element is a dictionary 
+            representing a keyframe packet (containing at least 'pts_time' and 'flags')
+        - specs (Dict[str:Any]): A dictionary of the video specs and their values including 
+            codec, width, height, framerate, duration, size
+    """
     keyframe_packets = []
 
     for key in ["packets", "packets_and_frames"]:
         try:
             for packet in frame_data[key]:
-                if packet.get("type") == "packet" and "K" in packet["flags"]:
+                if packet.get("type") == "packet" and "K" in packet["flags"]:   #mode 2 - scan all packets for Keyframe flag
                     keyframe_packets.append(packet)
-                elif "flags" in packet and "K" in packet.get("flags"):
+                elif "flags" in packet and "K" in packet.get("flags"):  #same but for mode 1
                     keyframe_packets.append(packet)
         except KeyError:
             continue
@@ -217,6 +274,16 @@ def process_frame_data_to_keyframes(frame_data):
     return keyframe_packets, specs
 
 def process_all_frames(frame_data):
+    """
+    For mode 2, counts I/P/B frames and sums their sizes from provided ffprobe JSON.
+
+    Args:
+        frame_data (Dict[str, Any]): Parsed FFprobe JSON output
+
+    Returns:
+        Dict[str, int]: Dictionary mapping frame types ('I', 'P', 'B') to total size.
+        Dict[str, int]: Dictionary mapping frame types ('I', 'P', 'B') to total count.
+    """
     frames_size = {'I':0, 'P':0, 'B':0}
     frames_count = {'I':0, 'P':0, 'B':0}
 
@@ -228,6 +295,18 @@ def process_all_frames(frame_data):
     return frames_size, frames_count
 
 def process_keyframes(keyframe_packets, p):
+    """
+    Calculates keyframe intervals and generates the output descriptions with
+    timestamps and intervals.
+
+    Args:
+        keyframe_packets (List[Dict[str, Any]]): List of keyframe packet dicts.
+        p (bool): Flag to enable/disable 0-based PTS offset.
+
+    Returns:
+        - List[Tuple[str, str]]: List of formatted (position_str, interval_str) tuples.
+        - int: Total count of keyframes processed.
+    """
     keyframe_count = len(keyframe_packets)
     keyframe_data = []
     first_loop = True
@@ -258,6 +337,12 @@ def parse_fraction(fraction_str):
     return numerator / denominator
 
 def main():
+    """
+    Runs the main video analysis workflow.
+
+    Gets user input for video file and analysis type, performs the analysis
+    using FFprobe, processes the results, and prints them to the console.
+    """
     filepath, analysis_type = user_input()
 
     print(f"\nUsing FFprobe at: {get_ffprobe_path()}")
