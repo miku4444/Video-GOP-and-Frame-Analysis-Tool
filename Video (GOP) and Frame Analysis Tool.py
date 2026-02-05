@@ -398,7 +398,7 @@ def main():
             position, interval = tuple
             print(f"{position},  {interval}")
 
-    print("__________________________________")
+    print("___________________________________")
     print("\n")
 
 while True:    
@@ -407,3 +407,4 @@ while True:
     input_from_user = input("\nEnter to run again or type 'exit'... ")
     if input_from_user == "exit":
         break
+
