@@ -80,7 +80,6 @@ This mismatch between decimal and binary risks misinterpretation for any non-byt
     - streaming/progressive output allows for almost instantaneous results - faster visible results than traditional commands and any other ffprobe implementations
  
 ## To Do
-- add unit tests with mocked ffprobe
 - toggle to switch between bytes and larger units at the end, would probably need to replace terminal output, can also use rich
 - pivot to object oriented code from current procedual code 
 - add time taken
